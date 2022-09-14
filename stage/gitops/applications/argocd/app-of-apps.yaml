@@ -12,5 +12,7 @@ spec:
   project: default
   source:
     path: stage/gitops/applications
-    repoURL: https://github.com/whereismyjetpack/infra
+    repoURL: https://github.com/whereismyjetpack/infra.git
     targetRevision: HEAD
+    directory:
+      recurse: true
