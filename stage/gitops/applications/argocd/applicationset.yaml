@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: infra
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/whereismyjetpack/infra.git
+        revision: main
+        directories:
+          - path: stage/gitops/applications/*
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/whereismyjetpack/infra.git
+        targetRevision: main
+        path: '{{path}}'
+        directory:
+          recurse: true
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
