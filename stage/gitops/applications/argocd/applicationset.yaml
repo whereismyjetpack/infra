@@ -14,7 +14,7 @@ spec:
           - path: stage/gitops/applications/*
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: '{{path.basename}}-appset'
     spec:
       project: default
       source:
