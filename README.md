@@ -10,12 +10,21 @@
 * terraform
 * awscli
 
-## Setup
-Copy .envrc and customize 
+## Quickstart
 
+Setup env, and variables
 ```
 cp .envrc.example .envrc
+vi .envrc
 direnv allow
+```
+Apply an environment
+
+```
+cd stage/tf
+terraform init
+terraform plan
+terraform apply
 ```
 
 ## Directory Structure
