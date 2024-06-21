@@ -4,7 +4,7 @@ data "http" "myip" {
 }
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
-  version = "~> 18.0"
+  version = "~> 20.14.0"
 
 
   cluster_name = var.cluster_name
@@ -33,17 +33,19 @@ module "eks" {
     }
   }
 
+  enable_cluster_creator_admin_permissions = true
+
   cluster_endpoint_public_access_cidrs = [
-    "${chomp(data.http.myip.body)}/32"
+    "${chomp(data.http.myip.response_body)}/32"
   ]
 
   cluster_addons = {
     vpc-cni = {
-      resolve_conflicts = "OVERWRITE"
+      resolve_conflicts_on_create = "OVERWRITE"
     }
      
     aws-ebs-csi-driver = {
-      resolve_conflicts = "OVERWRITE"
+      resolve_conflicts_on_create = "OVERWRITE"
     }
     kube-proxy = {}
   }
@@ -64,16 +66,6 @@ module "eks" {
       capacity_type  = "SPOT"
     }
   }
-
-  manage_aws_auth_configmap = false
-
-  aws_auth_users = [ 
-    {
-    rolearn = data.aws_caller_identity.current.arn
-    username = data.aws_caller_identity.current.user_id
-    groups = ["system:masters"]
-    }
-  ]
 
   vpc_id = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets

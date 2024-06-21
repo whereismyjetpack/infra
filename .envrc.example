@@ -1,4 +1,4 @@
-tfenv use 1.2.8
+tfenv use 1.8.5
 # Used for terraform aws provider
 export AWS_ACCESS_KEY_ID=""
 export AWS_SECRET_ACCESS_KEY=""
@@ -6,6 +6,6 @@ export AWS_SECRET_ACCESS_KEY=""
 export TF_VAR_crossplane_access_key_id=
 export TF_VAR_crossplane_secret_access_key=""
 # authentication for ArgoCD to the gitops repo (this repo)
-export TV_VAR_gitops_repo="https://github.com/whereismyjetpack/infra.git"
+export TF_VAR_gitops_repo="https://github.com/whereismyjetpack/infra.git"
 export TF_VAR_github_username=
 export TF_VAR_github_password=
