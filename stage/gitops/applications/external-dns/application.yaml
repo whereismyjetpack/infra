@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: external-dns
+    repoURL: https://kubernetes-sigs.github.io/external-dns/
+    targetRevision: 1.14.5
+    helm:
+      values: |
+        serviceAccount:
+          annotations:
+            eks.amazonaws.com/role-arn: "arn:aws:iam::304225443749:role/external-dns"
+        provider:
+          name: aws
+        env:
+          - name: AWS_DEFAULT_REGION
+            value: us-east-1
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
