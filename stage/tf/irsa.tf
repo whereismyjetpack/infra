@@ -4,7 +4,7 @@ module "external_dns_irsa_role" {
 
   role_name                     = "external-dns"
   attach_external_dns_policy    = true
-  external_dns_hosted_zone_arns = ["arn:aws:route53:::hostedzone/Z3QUXIJSB2UGK0"]
+  external_dns_hosted_zone_arns = [var.external_dns_hosted_zone_arn]
 
   oidc_providers = {
     ex = {
@@ -13,8 +13,8 @@ module "external_dns_irsa_role" {
     }
   }
 
-  # TODO proper tags
   tags = {
-    testing = "true"
+    terraform = "true"
+    env = "stage"
   }
 }
