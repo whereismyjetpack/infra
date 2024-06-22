@@ -5,3 +5,4 @@ variable "cluster_name" {}
 variable "cluster_version" {}
 variable "crossplane_access_key_id" {}
 variable "crossplane_secret_access_key" {}
+variable "external_dns_hosted_zone_arn" {}

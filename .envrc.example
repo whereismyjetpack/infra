@@ -9,3 +9,4 @@ export TF_VAR_crossplane_secret_access_key=""
 export TF_VAR_gitops_repo="https://github.com/whereismyjetpack/infra.git"
 export TF_VAR_github_username=
 export TF_VAR_github_password=
+export TF_VAR_external_dns_hosted_zone_arn=
