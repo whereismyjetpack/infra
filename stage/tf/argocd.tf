@@ -1,12 +1,10 @@
-data "kubectl_path_documents" "argocd" {
-  pattern = "./gitops/applications/argocd/*.yaml"
-}
-
-resource "kubectl_manifest" "argocd" {
-    count     = length(data.kubectl_path_documents.argocd.documents)
-    yaml_body = element(data.kubectl_path_documents.argocd.documents, count.index)
-    override_namespace = "argocd"
-    depends_on = [kubernetes_namespace.argocd]
+resource "helm_release" "argocd" {
+    name = "argocd"
+    repository = "https://argoproj.github.io/argo-helm"
+    namespace = "argocd"
+    chart = "argo-cd"
+    wait = true
+    version = "7.2.0"
 }
 
 resource "kubernetes_namespace" "argocd" {
@@ -22,11 +20,22 @@ resource "kubernetes_secret" "gitops_repo" {
     username = var.github_username
     password = var.github_password
   }
+
   metadata {
     namespace = "argocd"
     name = "gitops-repo"
     labels = {
        "argocd.argoproj.io/secret-type": "repository"
     }
+  }
+}
+
+resource "null_resource" "setup_argocd" {
+  depends_on = [
+    helm_release.argocd
+  ]
+
+  provisioner "local-exec" {
+    command = "kubectl apply -f gitops/applications/argocd/applicationset.yaml"
   }
 }
