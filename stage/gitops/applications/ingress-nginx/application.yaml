@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  syncPolicy:
+    automated: {}
   source:
     chart: ingress-nginx
     repoURL: https://kubernetes.github.io/ingress-nginx

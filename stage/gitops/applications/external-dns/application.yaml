@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  syncPolicy:
+    automated: {}
   source:
     chart: external-dns
     repoURL: https://kubernetes-sigs.github.io/external-dns/
