@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: crossplane
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
   namespace: argocd
 spec:
   project: default
