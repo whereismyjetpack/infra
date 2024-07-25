@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: linkerd-viz
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://helm.linkerd.io/stable
+    targetRevision: 30.12.11
+    chart: linkerd-viz
+    helm:
+      # values: |
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: linkerd-viz
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
+  revisionHistoryLimit: 10
