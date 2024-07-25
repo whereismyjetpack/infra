@@ -1,0 +1,31 @@
+cluster:
+  name: stage-a
+egressMasqueradeInterfaces: eth0
+eni:
+  enabled: true
+ipam:
+  mode: eni
+operator:
+  replicas: 1
+routingMode: native
+serviceAccounts:
+  cilium:
+    name: cilium
+  operator:
+    name: cilium-operator
+tunnel: disabled
+hubble:
+  ui:
+    enabled: true
+  enabled: true
+  relay:
+    enabled: true
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: cni
+          operator: NotIn
+          values:
+          - aws-cni
