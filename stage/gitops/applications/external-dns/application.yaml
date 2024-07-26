@@ -15,7 +15,7 @@ spec:
       values: |
         serviceAccount:
           annotations:
-            eks.amazonaws.com/role-arn: "arn:aws:iam::304225443749:role/external-dns"
+            eks.amazonaws.com/role-arn: "arn:aws:iam::795689218805:role/external-dns"
         provider:
           name: aws
         env:
